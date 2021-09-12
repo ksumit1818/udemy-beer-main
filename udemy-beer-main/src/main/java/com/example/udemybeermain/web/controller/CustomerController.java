@@ -15,36 +15,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.udemybeermain.services.BeerService;
-import com.example.udemybeermain.web.model.BeerDto;
+import com.example.udemybeermain.services.CustomerService;
+import com.example.udemybeermain.web.model.CustomerDto;
 
 @RestController
-@RequestMapping("/api/v1/beer")
-public class BeerController {
+@RequestMapping("/api/v1/customer")
+public class CustomerController {
 	
 	@Autowired
-	private BeerService beerService;
+	private CustomerService customerService;
 
-	@GetMapping("/{beerId}")
-	public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
-		return new ResponseEntity<>(BeerDto.builder().build(),HttpStatus.OK);
+	@GetMapping("/{customerId}")
+	public ResponseEntity<CustomerDto> getCustomerById(@PathVariable("customerId") UUID customerId){
+		return new ResponseEntity<>(CustomerDto.builder().build(),HttpStatus.OK);
 	}
 	
 	@PostMapping
-	public ResponseEntity<BeerDto> savedNewBeer(@RequestBody BeerDto beerDto) {
-		BeerDto savedDto= beerService.saveNewBeer(beerDto);
+	public ResponseEntity<CustomerDto> savedNewCustomer(@RequestBody CustomerDto customerDto) {
+		CustomerDto savedDto= customerService.saveNewCustomer(customerDto);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", "/api/v1/beer" + savedDto.getId().toString());
+		headers.add("Location", "/api/v1/customer" + savedDto.getId().toString());
 		return new ResponseEntity<>(headers,HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/{beerId}")
-	public ResponseEntity<BeerDto> updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
+	@PutMapping("/{customerId}")
+	public ResponseEntity<CustomerDto> updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDto customerDto) {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-
-	@DeleteMapping("/{beerId}")
-	public ResponseEntity<BeerDto> deleteBeerById(@PathVariable("beerId") UUID beerId) {
+	
+	@DeleteMapping("/{customerId}")
+	public ResponseEntity<CustomerDto> deleteCustomerById(@PathVariable("customerId") UUID customerId) {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
